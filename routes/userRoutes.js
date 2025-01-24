@@ -40,16 +40,27 @@ router.post("/register", async (req, res) => {
       subject: "Your OTP Code",
       text: `Your OTP code is: ${otp}`,
     };
+    transporter.verify((error, success) => {
+      if (error) {
+        console.error("Transporter verification failed:", error);
+      } else {
+        console.log("Transporter is ready to send emails.");
+      }
+    });
 
     transporter.sendMail(mailOptions, async (error) => {
-      if (error) {
-        return res
+      try {
+        await transporter.sendMail(mailOptions);
+        req.session = { otp, email, phone, name };
+        res
+          .status(200)
+          .json({ message: "Please check your email for the OTP." });
+      } catch (error) {
+        console.error("Error sending email:", error);
+        res
           .status(500)
           .json({ message: "Error sending OTP. Please try again." });
       }
-
-      req.session = { otp, email, phone, name };
-      res.status(200).json({ message: "Please check your email for the OTP." });
     });
   }
 });
