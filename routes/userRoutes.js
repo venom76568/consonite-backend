@@ -66,7 +66,7 @@ router.post("/register", async (req, res) => {
 });
 
 // Verify OTP and handle blacklist logic
-router.post("/verify", async (req, res) => {
+router.post("/verify", cors(), async (req, res) => {
   const { otp, phone, name, email } = req.body;
 
   if (parseInt(otp) === req.session.otp) {
