@@ -16,9 +16,10 @@ const allowedOrigins = [
 
 app.use(
   cors({
-    origin: allowedOrigins,
-    methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    origin: allowedOrigins, // Allow requests only from specified origins
+    methods: ["GET", "POST", "OPTIONS"], // Allow specific HTTP methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Allow specific headers
+    credentials: true, // If you're handling credentials like cookies or sessions
   })
 );
 app.use(bodyParser.json());
