@@ -51,10 +51,10 @@ router.post("/register", async (req, res) => {
     transporter.sendMail(mailOptions, async (error) => {
       try {
         await transporter.sendMail(mailOptions);
-        req.session = { otp, email, phone, name };
+
         res
           .status(200)
-          .json({ message: "Please check your email for the OTP." });
+          .json({ message: "Please check your email for the OTP.", otp });
       } catch (error) {
         console.error("Error sending email:", error);
         res
@@ -66,27 +66,27 @@ router.post("/register", async (req, res) => {
 });
 
 // Verify OTP and handle blacklist logic
-router.post("/verify", async (req, res) => {
-  const { otp, phone, name, email } = req.body;
+// router.post("/verify", cors(), async (req, res) => {
+//   const { otp, phone, name, email } = req.body;
 
-  if (parseInt(otp) === req.session.otp) {
-    if (blacklist.includes(phone)) {
-      // Log to blacklist_trying database
-      const attempt = new BlacklistTrying({ name, email, phone });
-      await attempt.save();
-      return res.status(403).json({
-        message: "Your email is not valid. Please use a different email.",
-      });
-    }
+//   if (parseInt(otp) === req.session.otp) {
+//     if (blacklist.includes(phone)) {
+//       // Log to blacklist_trying database
+//       const attempt = new BlacklistTrying({ name, email, phone });
+//       await attempt.save();
+//       return res.status(403).json({
+//         message: "Your email is not valid. Please use a different email.",
+//       });
+//     }
 
-    // Non-blacklisted user
-    return res.status(200).json({
-      message: "Please contact here to get your ticket.",
-      whatsappLink: `https://wa.me/8805214581`,
-    });
-  } else {
-    return res.status(400).json({ message: "Invalid OTP. Please try again." });
-  }
-});
+//     // Non-blacklisted user
+//     return res.status(200).json({
+//       message: "Please contact here to get your ticket.",
+//       whatsappLink: `https://wa.me/8805214581`,
+//     });
+//   } else {
+//     return res.status(400).json({ message: "Invalid OTP. Please try again." });
+//   }
+// });
 
 module.exports = router;
