@@ -11,7 +11,8 @@ dotenv.config();
 const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://your-frontend-domain.com",
+  "https://consonite.ecellvnit.org",
+  "https://www.consonite.ecellvnit.org",
 ];
 
 app.use(
@@ -23,7 +24,7 @@ app.use(
   })
 );
 app.use(bodyParser.json());
-app.options("*", cors());
+app.options("/verify", cors());
 
 // MongoDB Connection
 mongoose
