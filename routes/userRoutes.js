@@ -3,7 +3,7 @@ const router = express.Router();
 const nodemailer = require("nodemailer");
 const User = require("../models/User");
 const BlacklistTrying = require("../models/BlacklistTrying");
-
+const cors = require("cors");
 // Mocked blacklist data
 const blacklist = require("../utils/blacklist.json");
 
