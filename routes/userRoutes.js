@@ -12,7 +12,7 @@ const blacklist = require("../utils/blacklist.json");
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: consonitevnit@gmail.com, // Your email address
+    user: "consonitevnit@gmail.com", // Your email address
     pass: "spvqsitmxpgkrhyu", // Your email app password
   },
 });
