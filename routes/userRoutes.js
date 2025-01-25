@@ -37,7 +37,7 @@ router.post("/register", async (req, res) => {
     const mailOptions = {
       from: process.env.EMAIL,
       to: email,
-      subject: "Your OTP Code",
+      subject: "Your OTP Code for Consonite Website validation.",
       text: `Your OTP code is: ${otp}`,
     };
     transporter.verify((error, success) => {
