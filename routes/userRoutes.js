@@ -12,8 +12,8 @@ const blacklist = require("../utils/blacklist.json");
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: process.env.EMAIL, // Your email address
-    pass: process.env.EMAIL_PASSWORD, // Your email app password
+    user: consonitevnit@gmail.com, // Your email address
+    pass: "spvqsitmxpgkrhyu", // Your email app password
   },
 });
 
