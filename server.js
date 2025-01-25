@@ -9,6 +9,8 @@ const userRoutes = require("./routes/userRoutes");
 dotenv.config();
 
 const app = express();
+
+// Allowed Origins
 const allowedOrigins = [
   "http://localhost:5173",
   "https://consonite.ecellvnit.org",
@@ -17,12 +19,22 @@ const allowedOrigins = [
 
 app.use(
   cors({
-    origin: allowedOrigins, // Allow requests only from specified origins
-    methods: ["GET", "POST", "OPTIONS"], // Allow specific HTTP methods
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true); // Allow specified origins
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"], // Allow these HTTP methods
     allowedHeaders: ["Content-Type", "Authorization"], // Allow specific headers
-    credentials: true, // If you're handling credentials like cookies or sessions
+    credentials: true, // Support cookies or tokens
   })
 );
+
+// Handle Preflight OPTIONS requests
+app.options("*", cors());
+
 app.use(bodyParser.json());
 
 // MongoDB Connection
