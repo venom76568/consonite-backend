@@ -12,7 +12,7 @@ const blacklist = require("../utils/blacklist.json");
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "consonitevnit@gmail.com, // Your email address
+    user: "consonitevnit@gmail.com", // Your email address
     pass: "spvqsitmxpgkrhyu", // Your email app password
   },
 });
@@ -56,38 +56,38 @@ router.post("/register", async (req, res) => {
 });
 
 // Verify OTP and Handle Blacklist Logic
-router.post("/verify", async (req, res) => {
-  const { otp, phone, name, email } = req.body;
+// router.post("/verify", async (req, res) => {
+//   const { otp, phone, name, email } = req.body;
 
-  try {
-    // Mock OTP validation for now
-    const validOTP = parseInt(otp) === 123456; // Replace this with your OTP validation logic
+//   try {
+//     // Mock OTP validation for now
+//     const validOTP = parseInt(otp) === 123456; // Replace this with your OTP validation logic
 
-    if (validOTP) {
-      if (blacklist.includes(phone)) {
-        // Log attempt in BlacklistTrying model
-        const attempt = new BlacklistTrying({ name, email, phone });
-        await attempt.save();
+//     if (validOTP) {
+//       if (blacklist.includes(phone)) {
+//         // Log attempt in BlacklistTrying model
+//         const attempt = new BlacklistTrying({ name, email, phone });
+//         await attempt.save();
 
-        return res.status(403).json({
-          message: "Your email is not valid. Please use a different email.",
-        });
-      }
+//         return res.status(403).json({
+//           message: "Your email is not valid. Please use a different email.",
+//         });
+//       }
 
-      // Valid user
-      return res.status(200).json({
-        message: "Please contact here to get your ticket.",
-        whatsappLink: `https://wa.me/8805214581`,
-      });
-    } else {
-      return res
-        .status(400)
-        .json({ message: "Invalid OTP. Please try again." });
-    }
-  } catch (error) {
-    console.error("Error verifying OTP:", error);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-});
+//       // Valid user
+//       return res.status(200).json({
+//         message: "Please contact here to get your ticket.",
+//         whatsappLink: `https://wa.me/8805214581`,
+//       });
+//     } else {
+//       return res
+//         .status(400)
+//         .json({ message: "Invalid OTP. Please try again." });
+//     }
+//   } catch (error) {
+//     console.error("Error verifying OTP:", error);
+//     res.status(500).json({ message: "Internal Server Error" });
+//   }
+// });
 
 module.exports = router;
